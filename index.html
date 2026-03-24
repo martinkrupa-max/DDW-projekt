@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VUE Routing</title>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <!-- vue script-->
-    <script src="https://unpkg.com/vue-router@4"></script> <!-- script nasho router-a (smerovaca)-->
-    <script src="main.js" type="module" defer></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- vue script-->
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./main.js"></script>
 </head>
+
 <body>
+
+
     <div id="app">
-        <!-- nav element predstavuje navigacne menu-->
-        <nav>
-            <router-link to="/">Home </router-link>
-            <router-link to="/about">About </router-link>
-            <router-link to="/classes">Classes</router-link>
-        </nav>
-        <!-- router-view element povie Vue Router-u, kde ma vykreslit komponent zodpovedajuci aktualnej route (trase)-->
-        <router-view/>
+        <card-list :movies="movies">
+        </card-list>
     </div>
+
+
+
 </body>
+
 </html>

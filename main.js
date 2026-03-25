@@ -1,13 +1,15 @@
 import card from "./components/card.js"
 import filterBar from "./components/filterBar.js"
 import useFilms from "./composables/useFilms.js"
+import navbar from "./components/navbar.js"
 
 const { createApp, reactive, onMounted } = Vue
 
 createApp({
     components: {
         card,
-        filterBar
+        filterBar,
+        navbar
     },
 
     setup() {

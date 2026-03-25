@@ -3,7 +3,8 @@ import useFilms from "../../composables/useFilms.js"
 
 const { onMounted } = Vue
 
-let FavMoviesPage = {
+const FavMoviesPage = {
+    props: ["getFavoriteFilms"],
     components: {
         card
     },
@@ -22,7 +23,8 @@ let FavMoviesPage = {
                 :key="film.filmTitle"
                 :film="film"
                 :toggle-favorite="toggleFavorite"
-                :is-favorite="isFavorite">
+                :is-favorite="isFavorite"
+                :remove-film="removeFilmByTitle">
             </card>
         </div>
     </section>
@@ -34,7 +36,8 @@ let FavMoviesPage = {
             fetchFilms,
             getFavoriteFilms,
             toggleFavorite,
-            isFavorite
+            isFavorite,
+            removeFilmByTitle
         } = useFilms()
 
         onMounted(fetchFilms)
@@ -43,7 +46,8 @@ let FavMoviesPage = {
             films,
             getFavoriteFilms,
             toggleFavorite,
-            isFavorite
+            isFavorite,
+            removeFilmByTitle
         }
     }
 }

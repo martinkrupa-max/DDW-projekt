@@ -7,9 +7,9 @@ let navbar = {
         </div>
 
         <ul class="navbar-links">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Fav Movies</a></li>
-            <li><a href="#">About</a></li>
+            <li><router-link to="/" active-class="active">Home</router-link></li>
+            <li><router-link to="/favorites" active-class="active">Fav Movies</router-link></li>
+            <li><router-link to="/add" active-class="active">Add new</router-link></li>
         </ul>
     </nav>
     `

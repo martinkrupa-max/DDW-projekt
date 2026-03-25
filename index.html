@@ -20,7 +20,8 @@
         </filter-bar>
 
 
-        <router-view></router-view>
+        <router-view :films="films" :toggle-favorite="toggleFavorite" :is-favorite="isFavorite" :get-filtered-films="getFilteredFilms" :toggle-favorite="toggleFavorite" :is-favorite="isFavorite" :remove-film="removeFilmByTitle" :add-film="addFilm">
+        </router-view>
     </div>
 
 </body>

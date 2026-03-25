@@ -5,9 +5,11 @@ import navbar from "./components/navbar.js"
 import HomePage from "./components/pages/HomePage.js"
 import FavMoviesPage from "./components/pages/FavMoviesPage.js"
 import AboutPage from "./components/pages/AboutPage.js"
+import DetailPage from "./components/pages/DetailPage.js"
+import AddMoviePage from "./components/pages/AddMoviePage.js"
 
 const { createApp, reactive, onMounted } = Vue
-const { createRouter, createWebHashHistory } = VueRouter
+const { createRouter, createWebHistory } = VueRouter
 
 const App = ({
     components: {
@@ -94,7 +96,10 @@ const App = ({
 
         onMounted(fetchFilms)
 
+
         return {
+
+            getFilteredFilms,
             films,
             filters,
             ensureFilmsLoaded,
@@ -102,18 +107,13 @@ const App = ({
             updateFilters,
             resetFilters,
             getCertificates,
-            getFilteredFilms,
             removeFilmByTitle,
             toggleFavorite,
-            isFavorite
+            isFavorite,
+            addFilm
 
         }
     }
-
-
-
-
-
 })
 
 const routes = [{
@@ -125,19 +125,23 @@ const routes = [{
         component: FavMoviesPage
     },
     {
-        path: "/about",
-        component: AboutPage
+        path: "/add",
+        component: AddMoviePage,
+        props: true
     },
-    // {
-    //     path: "/movie/:title",
-    //     component: MovieDetailPage
-    // }
+    {
+        path: "/movie/:title",
+        component: DetailPage,
+        props: true
+    }
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
+
+
 
 
 createApp(App).use(router).mount("#app")

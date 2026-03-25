@@ -1,10 +1,18 @@
 let card = {
     props: ["film", "removeFilm", "toggleFavorite", "isFavorite"],
 
+    data() {
+        return {
+            expanded: false
+        }
+    },
+
     template: `
     <div class="movie-card">
         <div class="movie-image">
-            <img :src="'./data/images/' + film.filmImage" :alt="film.filmTitle">
+        <router-link :to="'/movie/' + film.filmTitle">
+            <img :src="'./data/images/' + film.filmImage">
+        </router-link>
             <span class="certificate">{{ film.filmCertificate }}</span>
         </div>
 
@@ -18,7 +26,18 @@ let card = {
                 <span class="stars">{{ "★".repeat(Number(film.stars)) }}</span>
             </div>
 
-            <p class="description">{{ film.filmDescription }}</p>
+            <p class="description">
+                {{ expanded 
+                    ? film.filmDescription 
+                    : film.filmDescription.slice(0, 120) + "..." }}
+            </p>
+
+            <button
+                v-if="film.filmDescription.length > 120"
+                @click="expanded = !expanded"
+                class="btn-toggle-desc">
+                {{ expanded ? "Show less" : "Show more" }}
+            </button>
 
             <div class="movie-footer">
                 <span class="price">€{{ film.filmPrice }}</span>

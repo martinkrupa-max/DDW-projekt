@@ -366,3 +366,36 @@ body {
         flex-wrap: wrap;
     }
 }
+
+.description {
+    transition: all 0.3s ease;
+}
+
+.btn-toggle-desc {
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.movie-form {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preview-img {
+    width: 150px;
+    border-radius: 8px;
+}
+
+.btn-submit {
+    background: #42b883;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}

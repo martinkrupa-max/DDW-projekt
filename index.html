@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie App</title>
+    <title>Filmy</title>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="./style.css">
@@ -19,7 +19,7 @@
         </filter-bar>
 
         <div class="movie-grid">
-            <card v-for="film in getFilteredFilms()" :key="film.filmTitle" :film="film" :remove-film="removeFilm">
+            <card v-for="film in getFilteredFilms()" :key="film.filmTitle" :film="film" :remove-film="removeFilmByTitle" :toggle-favorite="toggleFavorite" :is-favorite="isFavorite">
             </card>
         </div>
     </div>

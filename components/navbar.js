@@ -8,7 +8,7 @@ let navbar = {
 
         <ul class="navbar-links">
             <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Movies</a></li>
+            <li><a href="#">Fav Movies</a></li>
             <li><a href="#">About</a></li>
         </ul>
     </nav>

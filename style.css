@@ -133,6 +133,7 @@ body {
     margin-right: auto;
 }
 
+.btn-favorite,
 .btn-buy,
 .btn-remove {
     border: none;
@@ -143,6 +144,7 @@ body {
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
+.btn-favorite,
 .btn-buy {
     background: #3b82f6;
     color: white;

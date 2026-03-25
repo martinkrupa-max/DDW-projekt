@@ -13,7 +13,7 @@ createApp({
     },
 
     setup() {
-        const { films, fetchFilms, removeFilm, addFilm } = useFilms()
+        const { films, fetchFilms, ensureFilmsLoaded, addFilm, removeFilmByTitle, toggleFavorite, isFavorite } = useFilms()
 
         const filters = reactive({
             search: "",
@@ -93,12 +93,16 @@ createApp({
         return {
             films,
             filters,
-            removeFilm,
+            ensureFilmsLoaded,
             addFilm,
             updateFilters,
             resetFilters,
             getCertificates,
-            getFilteredFilms
+            getFilteredFilms,
+            removeFilmByTitle,
+            toggleFavorite,
+            isFavorite
+
         }
     }
 }).mount("#app")

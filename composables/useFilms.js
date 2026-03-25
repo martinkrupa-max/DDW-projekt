@@ -2,6 +2,7 @@ const { reactive } = Vue
 
 // globálny stav pre filmy
 const films = reactive([])
+const favoriteTitles = reactive([])
 
 // pomocný flag, aby sme nenačítavali rovnaké dáta stále dokola
 let isLoaded = false
@@ -37,6 +38,8 @@ function addFilm(newFilm) {
     films.push(newFilm)
 }
 
+
+
 // odstránenie filmu podľa názvu
 function removeFilmByTitle(title) {
     const idx = films.findIndex(item => item.filmTitle === title)
@@ -44,13 +47,37 @@ function removeFilmByTitle(title) {
     if (idx !== -1) {
         films.splice(idx, 1)
     }
+    removeFromFavorites(title)
 }
 
-// odstránenie filmu podľa indexu
-function removeFilmByIndex(index) {
-    if (index >= 0 && index < films.length) {
-        films.splice(index, 1)
+function addToFavorites(title) {
+    if (!favoriteTitles.includes(title)) {
+        favoriteTitles.push(title)
     }
+}
+
+function removeFromFavorites(title) {
+    const index = favoriteTitles.findIndex(item => item === title)
+
+    if (index !== -1) {
+        favoriteTitles.splice(index, 1)
+    }
+}
+
+function toggleFavorite(title) {
+    if (favoriteTitles.includes(title)) {
+        removeFromFavorites(title)
+    } else {
+        addToFavorites(title)
+    }
+}
+
+function isFavorite(title) {
+    return favoriteTitles.includes(title)
+}
+
+function getFavoriteFilms() {
+    return films.filter(film => favoriteTitles.includes(film.filmTitle))
 }
 
 // nájdenie jedného filmu podľa názvu
@@ -78,7 +105,9 @@ function useFilms() {
         ensureFilmsLoaded,
         addFilm,
         removeFilmByTitle,
-        removeFilmByIndex,
+        toggleFavorite,
+        isFavorite,
+        getFavoriteFilms,
         getFilmByTitle,
         updateFilmByTitle
     }

@@ -1,5 +1,5 @@
 let card = {
-    props: ["film", "removeFilm"],
+    props: ["film", "removeFilm", "toggleFavorite", "isFavorite"],
 
     template: `
     <div class="movie-card">
@@ -22,8 +22,19 @@ let card = {
 
             <div class="movie-footer">
                 <span class="price">€{{ film.filmPrice }}</span>
-                <button class="btn-buy">Rent Movie</button>
-                <button @click="removeFilm(film.filmTitle)" class="btn-remove">X</button>
+
+                <button
+                    @click="toggleFavorite(film.filmTitle)"
+                    class="btn-favorite">
+                    {{ isFavorite(film.filmTitle) ? "★ Remove favorite" : "☆ Add favorite" }}
+                </button>
+
+                <button
+                    v-if="removeFilm"
+                    @click="removeFilm(film.filmTitle)"
+                    class="btn-remove">
+                    X
+                </button>
             </div>
         </div>
     </div>

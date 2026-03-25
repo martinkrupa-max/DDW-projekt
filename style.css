@@ -178,3 +178,24 @@ body {
         font-size: 0.9rem;
     }
 }
+
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    align-items: center;
+}
+
+.filter-bar input,
+.filter-bar select,
+.filter-bar button {
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.filter-bar button {
+    cursor: pointer;
+}

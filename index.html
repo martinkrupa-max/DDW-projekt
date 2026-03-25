@@ -4,25 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VUE Routing</title>
+    <title>Movie App</title>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- vue script-->
-    <script src="https://unpkg.com/vue-router@4"></script>
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./main.js"></script>
 </head>
 
 <body>
-
-
     <div id="app">
-        <card-list :movies="movies">
-        </card-list>
+        <filter-bar :certificates="getCertificates()" :filters="filters" :update-filters="updateFilters" :reset-filters="resetFilters">
+        </filter-bar>
+
+        <div class="movie-grid">
+            <card v-for="film in getFilteredFilms()" :key="film.filmTitle" :film="film" :remove-film="removeFilm">
+            </card>
+        </div>
     </div>
-
-
-
 </body>
 
 </html>

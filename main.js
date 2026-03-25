@@ -1,65 +1,102 @@
-/*Nasa web aplikacia bude mat nasledujucu strukturu:
-    - hlavna stanka (HomePage)
-    - informacna stanka (AboutPage)
-    - stanka s tiedamy (ClassesPage)
-        - genericka (vyuziva parametre) podstranka pre jednu triedu (MyClassPage)
-*/
-//importy komponentov reprezentujucich jednotlive stranky nasej web aplikacie
-import HomePage from "./components/pages/HomePage.js"
-import AboutPage from "./components/pages/AboutPage.js"
-import ClassesPage from "./components/pages/ClassesPage.js"
-import MyClassPage from "./components/pages/MyClassPage.js"
+import card from "./components/card.js"
+import filterBar from "./components/filterBar.js"
+import useFilms from "./composables/useFilms.js"
 
-import CardList from "./components/CardList.js"
+const { createApp, reactive, onMounted } = Vue
 
-const { createApp, ref, onMounted } = Vue;
-
-//vytvorenie aplikacie
-const app = createApp({
-    components: { CardList },
+createApp({
+    components: {
+        card,
+        filterBar
+    },
 
     setup() {
-        const movies = ref([]); // Reaktívne pole pre filmy
+        const { films, fetchFilms, removeFilm, addFilm } = useFilms()
 
-        // Funkcia na načítanie dát
-        const fetchMovies = async() => {
-            try {
-                const response = await fetch('./data/films.json');
-                movies.value = await response.json();
-            } catch (error) {
-                console.error("Chyba pri načítaní filmov:", error);
+        const filters = reactive({
+            search: "",
+            certificate: "all",
+            stars: "0",
+            sortBy: "default"
+        })
+
+        function updateFilters(newFilters) {
+            filters.search = newFilters.search
+            filters.certificate = newFilters.certificate
+            filters.stars = newFilters.stars
+            filters.sortBy = newFilters.sortBy
+        }
+
+        function resetFilters() {
+            filters.search = ""
+            filters.certificate = "all"
+            filters.stars = "0"
+            filters.sortBy = "default"
+        }
+
+        function getCertificates() {
+            return [...new Set(films.map(film => film.filmCertificate))]
+        }
+
+        function getFilteredFilms() {
+            let result = [...films]
+
+            if (filters.search.trim() !== "") {
+                result = result.filter(film =>
+                    film.filmTitle.toLowerCase().includes(filters.search.toLowerCase())
+                )
             }
-        };
-        onMounted(fetchMovies);
-        return { movies }
+
+            if (filters.certificate !== "all") {
+                result = result.filter(film =>
+                    film.filmCertificate === filters.certificate
+                )
+            }
+
+            if (filters.stars !== "0") {
+                result = result.filter(film =>
+                    Number(film.stars) >= Number(filters.stars)
+                )
+            }
+
+            if (filters.sortBy === "title-asc") {
+                result.sort((a, b) => a.filmTitle.localeCompare(b.filmTitle))
+            }
+
+            if (filters.sortBy === "title-desc") {
+                result.sort((a, b) => b.filmTitle.localeCompare(a.filmTitle))
+            }
+
+            if (filters.sortBy === "price-asc") {
+                result.sort((a, b) => Number(a.filmPrice) - Number(b.filmPrice))
+            }
+
+            if (filters.sortBy === "price-desc") {
+                result.sort((a, b) => Number(b.filmPrice) - Number(a.filmPrice))
+            }
+
+            if (filters.sortBy === "year-asc") {
+                result.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate))
+            }
+
+            if (filters.sortBy === "year-desc") {
+                result.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
+            }
+
+            return result
+        }
+
+        onMounted(fetchFilms)
+
+        return {
+            films,
+            filters,
+            removeFilm,
+            addFilm,
+            updateFilters,
+            resetFilters,
+            getCertificates,
+            getFilteredFilms
+        }
     }
-})
-
-app.mount("#app")
-
-// const { createRouter, createWebHistory } = VueRouter;
-
-// //vytvorenie routes
-// const routes = [{
-//         path: "/",
-//         component: HomePage
-//     },
-//     {
-//         path: "/about",
-//         component: AboutPage
-//     },
-//     {
-//         path: "/classes",
-//         component: ClassesPage
-//     },
-//     {
-//         path: "/classes/:id", //takto specifikujeme parameter stranky s nazvom id v rámci jej zodpovedajucej cesty (/:nazov_parametra)
-//         component: MyClassPage
-//     },
-// ]
-
-// // const router = createRouter({
-// //         history: createWebHistory(),
-// //         routes
-// //     }) !
-// //     app.use(router)
+}).mount("#app")

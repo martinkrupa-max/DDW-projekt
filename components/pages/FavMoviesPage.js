@@ -1,5 +1,5 @@
-import card from "../components/card.js"
-import useFilms from "../composables/useFilms.js"
+import card from "../card.js"
+import useFilms from "../../composables/useFilms.js"
 
 const { onMounted } = Vue
 

@@ -2,10 +2,14 @@ import card from "./components/card.js"
 import filterBar from "./components/filterBar.js"
 import useFilms from "./composables/useFilms.js"
 import navbar from "./components/navbar.js"
+import HomePage from "./components/pages/HomePage.js"
+import FavMoviesPage from "./components/pages/FavMoviesPage.js"
+import AboutPage from "./components/pages/AboutPage.js"
 
 const { createApp, reactive, onMounted } = Vue
+const { createRouter, createWebHashHistory } = VueRouter
 
-createApp({
+const App = ({
     components: {
         card,
         filterBar,
@@ -105,4 +109,35 @@ createApp({
 
         }
     }
-}).mount("#app")
+
+
+
+
+
+})
+
+const routes = [{
+        path: "/",
+        component: HomePage
+    },
+    {
+        path: "/favorites",
+        component: FavMoviesPage
+    },
+    {
+        path: "/about",
+        component: AboutPage
+    },
+    // {
+    //     path: "/movie/:title",
+    //     component: MovieDetailPage
+    // }
+]
+
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+})
+
+
+createApp(App).use(router).mount("#app")

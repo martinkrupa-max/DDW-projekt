@@ -2,9 +2,10 @@
 const HomePage = {
     template: `
     <div>
-        <h1>Home</h1>
-        <p>This is the home page of our web application</p>
-        <pre>path: {{$route.fullPath}}</pre>
+        s<div class="movie-grid">
+            <card v-for="film in getFilteredFilms()" :key="film.filmTitle" :film="film" :remove-film="removeFilmByTitle" :toggle-favorite="toggleFavorite" :is-favorite="isFavorite">
+            </card>
+        </div>
     </div>
     `
 }

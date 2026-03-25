@@ -10,24 +10,38 @@ let filterBar = {
             @input="handleSearch"
         >
 
-        <select :value="filters.certificate" @change="handleCertificate">
-            <option value="all">All certificates</option>
-            <option
+        <div class="filter-group">
+            <p>Certificates</p>
+            <label
                 v-for="certificate in certificates"
                 :key="certificate"
-                :value="certificate">
+                class="checkbox-item"
+            >
+                <input
+                    type="checkbox"
+                    :value="certificate"
+                    :checked="filters.certificates.includes(certificate)"
+                    @change="handleCertificate($event, certificate)"
+                >
                 {{ certificate }}
-            </option>
-        </select>
+            </label>
+        </div>
 
-        <select :value="filters.stars" @change="handleStars">
-            <option value="0">All ratings</option>
-            <option value="1">1★ and more</option>
-            <option value="2">2★ and more</option>
-            <option value="3">3★ and more</option>
-            <option value="4">4★ and more</option>
-            <option value="5">5★ only</option>
-        </select>
+        <div class="filter-group">
+            <p>Rating</p>
+            <label
+                v-for="rating in ['1', '2', '3', '4', '5']"
+                :key="rating"
+                class="checkbox-item"
+            >
+                <input
+                    type="checkbox"
+                    :checked="filters.stars === rating"
+                    @change="handleStars(rating)"
+                >
+                {{ rating }}★
+            </label>
+        </div>
 
         <select :value="filters.sortBy" @change="handleSort">
             <option value="default">Default order</option>
@@ -51,17 +65,27 @@ let filterBar = {
             })
         },
 
-        handleCertificate(event) {
+        handleCertificate(event, certificate) {
+            let newCertificates = [...this.filters.certificates]
+
+            if (event.target.checked) {
+                newCertificates.push(certificate)
+            } else {
+                newCertificates = newCertificates.filter(item => item !== certificate)
+            }
+
             this.updateFilters({
                 ...this.filters,
-                certificate: event.target.value
+                certificates: newCertificates
             })
         },
 
-        handleStars(event) {
+        handleStars(rating) {
+            const newRating = this.filters.stars === rating ? "" : rating
+
             this.updateFilters({
                 ...this.filters,
-                stars: event.target.value
+                stars: newRating
             })
         },
 

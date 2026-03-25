@@ -15,22 +15,22 @@ createApp({
 
         const filters = reactive({
             search: "",
-            certificate: "all",
-            stars: "0",
+            certificates: [],
+            stars: "",
             sortBy: "default"
         })
 
         function updateFilters(newFilters) {
             filters.search = newFilters.search
-            filters.certificate = newFilters.certificate
+            filters.certificates = [...newFilters.certificates]
             filters.stars = newFilters.stars
             filters.sortBy = newFilters.sortBy
         }
 
         function resetFilters() {
             filters.search = ""
-            filters.certificate = "all"
-            filters.stars = "0"
+            filters.certificates = []
+            filters.stars = ""
             filters.sortBy = "default"
         }
 
@@ -47,15 +47,15 @@ createApp({
                 )
             }
 
-            if (filters.certificate !== "all") {
+            if (filters.certificates.length > 0) {
                 result = result.filter(film =>
-                    film.filmCertificate === filters.certificate
+                    filters.certificates.includes(film.filmCertificate)
                 )
             }
 
-            if (filters.stars !== "0") {
+            if (filters.stars !== "") {
                 result = result.filter(film =>
-                    Number(film.stars) >= Number(filters.stars)
+                    Number(film.stars) === Number(filters.stars)
                 )
             }
 

@@ -1,5 +1,6 @@
-let Card = {
+let card = {
     props: ["film", "removeFilm"],
+
     template: `
     <div class="movie-card">
         <div class="movie-image">
@@ -17,26 +18,23 @@ let Card = {
                 <span class="stars">{{ "★".repeat(Number(film.stars)) }}</span>
             </div>
 
-            <p class="description">
-                {{ film.filmDescription }}
-            </p>
+            <p class="description">{{ film.filmDescription }}</p>
 
             <div class="movie-footer">
                 <span class="price">€{{ film.filmPrice }}</span>
                 <button class="btn-buy">Rent Movie</button>
-                
-                <button v-if="removeFilm" @click="removeFilm(film.filmTitle)" class="btn-remove">X</button>
+                <button @click="removeFilm(film.filmTitle)" class="btn-remove">X</button>
             </div>
         </div>
     </div>
     `,
+
     methods: {
-        // Pomocná funkcia na získanie roku z dátumu "1988-02-23"
         getYear(dateString) {
-            if (!dateString) return '';
-            return new Date(dateString).getFullYear();
+            if (!dateString) return ""
+            return new Date(dateString).getFullYear()
         }
     }
 }
 
-export default Card;
+export default card
